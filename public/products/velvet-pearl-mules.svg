@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF4F2"/>
+      <stop offset="50%" stop-color="#F7E6E3"/>
+      <stop offset="100%" stop-color="#ECD4D1"/>
+    </linearGradient>
+    <linearGradient id="velvet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E59FA7"/>
+      <stop offset="100%" stop-color="#C06C75"/>
+    </linearGradient>
+    <filter id="shadow5" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#70363D" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg5)"/>
+  <circle cx="200" cy="235" r="140" fill="#FFFFFF" fill-opacity="0.45"/>
+  <circle cx="110" cy="110" r="70" fill="#E6BEBF" fill-opacity="0.3"/>
+  <circle cx="300" cy="380" r="75" fill="#DCADB0" fill-opacity="0.3"/>
+
+  <!-- Velvet Mules Silhouette -->
+  <g filter="url(#shadow5)">
+    <!-- Sole & Low Heel -->
+    <path d="M 100 280 C 130 275 190 280 230 290 L 300 290 C 305 290 305 298 295 300 L 110 305 C 95 305 92 285 100 280 Z" fill="#6A3B40"/>
+    <path d="M 285 300 L 282 325 L 298 325 L 295 300 Z" fill="#6A3B40"/>
+    <!-- Pointed Toe Upper -->
+    <path d="M 100 280 C 120 230 170 230 200 275 C 160 278 120 280 100 280 Z" fill="url(#velvet)"/>
+    <!-- Pearl Accent embellishments -->
+    <circle cx="155" cy="252" r="6" fill="#FFFFFF" stroke="#D3B8B8" stroke-width="1"/>
+    <circle cx="140" cy="260" r="5" fill="#FFFFFF" stroke="#D3B8B8" stroke-width="1"/>
+    <circle cx="170" cy="260" r="5" fill="#FFFFFF" stroke="#D3B8B8" stroke-width="1"/>
+  </g>
+  <rect x="130" y="430" width="140" height="28" rx="14" fill="#FFFFFF" fill-opacity="0.75"/>
+  <text x="200" y="449" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#6E383E" text-anchor="middle" letter-spacing="1.5">VELVET FOOTWEAR</text>
+</svg>
