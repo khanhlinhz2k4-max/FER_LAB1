@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome Back | Login",
-  description: "Please sign in to continue",
+  title: "Atelier Rose | Pastel Luxury Fashion",
+  description: "Curated collection of pastel luxury fashion garments",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF6F3"/>
+      <stop offset="50%" stop-color="#F5E8E2"/>
+      <stop offset="100%" stop-color="#ECD8CF"/>
+    </linearGradient>
+    <linearGradient id="knit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC5BE"/>
+      <stop offset="100%" stop-color="#CF968E"/>
+    </linearGradient>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#7B4C44" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="400" height="500" fill="url(#bg2)"/>
+  <circle cx="200" cy="230" r="145" fill="#FFFFFF" fill-opacity="0.4"/>
+  <circle cx="90" cy="110" r="60" fill="#E8C9C1" fill-opacity="0.35"/>
+  <circle cx="330" cy="380" r="85" fill="#EAD0C8" fill-opacity="0.35"/>
+
+  <!-- Stylized Knit Sweater Silhouette -->
+  <g filter="url(#shadow2)">
+    <!-- Collar -->
+    <path d="M 175 140 Q 200 155 225 140 Q 215 170 185 170 Z" fill="#BB8179"/>
+    <!-- Torso & Sleeves -->
+    <path d="M 175 140 L 115 200 L 140 230 L 165 190 L 165 330 L 235 330 L 235 190 L 260 230 L 285 200 L 225 140 Z" fill="url(#knit)"/>
+    <!-- Knit Texture Stitches -->
+    <line x1="175" y1="210" x2="225" y2="210" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.6"/>
+    <line x1="175" y1="240" x2="225" y2="240" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.6"/>
+    <line x1="175" y1="270" x2="225" y2="270" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.6"/>
+    <line x1="175" y1="300" x2="225" y2="300" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" opacity="0.6"/>
+  </g>
+  <rect x="130" y="430" width="140" height="28" rx="14" fill="#FFFFFF" fill-opacity="0.75"/>
+  <text x="200" y="449" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#6A3B35" text-anchor="middle" letter-spacing="1.5">PURE CASHMERE</text>
+</svg>

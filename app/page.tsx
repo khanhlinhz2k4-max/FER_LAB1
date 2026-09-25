@@ -1,350 +1,398 @@
-"use client";
+import Link from "next/link";
+import { products } from "@/data/products";
+import { ProductCard } from "@/components/ProductCard";
+import { Button } from "@/components/ui/button";
 
-import { useState, type FormEvent } from "react";
-
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // UI-only demo interaction (no database or backend logic)
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 3500);
-  };
-
+export default function HomePage() {
   return (
-    <main className="relative min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-[#FBF4EE] via-[#F7ECE8] to-[#EFE2DC] text-[#3F2A2A] overflow-hidden">
-      {/* ── Rich Pastel Aurora Decorative Background ── */}
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#FBF4EE] via-[#F8EDE9] to-[#F1E4DE] text-[#3F2A2A] selection:bg-[#EAA5AB]/30">
+      {/* ── Soft Ambient Decorative Background Orbs ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
+        className="pointer-events-none fixed inset-0 overflow-hidden -z-10"
       >
-        {/* Soft dusty rose glow */}
-        <div className="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#EAA5AB]/40 blur-3xl" />
-        {/* Warm peach blush glow */}
-        <div className="absolute top-1/4 -right-16 w-80 h-80 rounded-full bg-[#F5C7B8]/45 blur-3xl" />
-        {/* Soft lavender-rose tint */}
-        <div className="absolute -bottom-24 left-1/4 w-[28rem] h-[28rem] rounded-full bg-[#E0BFD5]/40 blur-3xl" />
-        {/* Warm mocha & amber accent */}
-        <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-[#E5BDB0]/35 blur-3xl" />
+        <div className="absolute -top-32 -left-28 w-[34rem] h-[34rem] rounded-full bg-[#EAA5AB]/20 blur-3xl" />
+        <div className="absolute top-1/4 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#F5C7B8]/25 blur-3xl" />
+        <div className="absolute -bottom-24 left-1/3 w-[32rem] h-[32rem] rounded-full bg-[#E0BFD5]/20 blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[#E8C2B5]/20 blur-3xl" />
       </div>
 
-      {/* ── Centered Login Card ── */}
-      <div className="relative z-10 w-full max-w-[460px]">
-        {/* Card Container with subtle warm border & layered soft shadow */}
-        <div className="bg-[#FFFDFB]/90 backdrop-blur-xl border border-[#ECD7D1] rounded-3xl shadow-[0_20px_50px_rgba(183,122,125,0.12)] p-7 sm:p-9 transition-all">
-          {/* Header Section */}
-          <div className="text-center mb-7">
-            {/* Colorful subtle brand emblem */}
-            <div className="inline-flex items-center justify-center w-13 h-13 rounded-2xl bg-gradient-to-tr from-[#D4898E] via-[#C97980] to-[#E29A98] text-white shadow-md shadow-[#C97980]/30 mb-3.5">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
+      {/* ── Top Announcement Bar ── */}
+      <div className="w-full bg-gradient-to-r from-[#874349] via-[#9E4D54] to-[#874349] text-white text-[11px] sm:text-xs py-2 px-4 text-center font-medium tracking-wide shadow-xs">
+        <span className="inline-flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FAD2D6] animate-pulse" />
+          ✨ Atelier Spring / Summer 2026: Complimentary Worldwide Boutique Shipping on orders over $150
+        </span>
+      </div>
+
+      {/* ── Header ── */}
+      <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#FFFDFB]/85 border-b border-[#ECD7D1]/70 transition-all shadow-[0_4px_20px_rgba(183,122,125,0.04)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
+          {/* Brand Logo & Name */}
+          <Link
+            href="/"
+            className="flex items-center gap-3.5 group focus:outline-none"
+          >
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-[#D4898E] via-[#C97980] to-[#E29A98] text-white flex items-center justify-center shadow-md shadow-[#C97980]/25 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-[#C97980]/35 transition-all">
+              <span className="font-serif font-bold text-lg sm:text-xl tracking-tighter">
+                AR
+              </span>
             </div>
+            <div>
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#3F2A2A] block leading-none font-serif">
+                ATELIER ROSE
+              </span>
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#8A5A5D] font-medium block mt-1">
+                Haute Couture &amp; Silks
+              </span>
+            </div>
+          </Link>
 
-            {/* Title */}
-            <h1 className="text-2xl sm:text-[1.75rem] font-bold text-[#3F2A2A] tracking-tight">
-              Welcome Back
-            </h1>
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-[#6C4246]">
+            <a
+              href="#collection-heading"
+              className="hover:text-[#A84A52] transition-colors"
+            >
+              Collection
+            </a>
+            <a
+              href="#artisanal-values"
+              className="hover:text-[#A84A52] transition-colors"
+            >
+              Artisanal Values
+            </a>
+            <a
+              href="#editorial-quote"
+              className="hover:text-[#A84A52] transition-colors"
+            >
+              Lookbook
+            </a>
+          </nav>
 
-            {/* Subtitle */}
-            <p className="text-xs sm:text-sm text-[#7A4E4E]/80 mt-1 font-normal">
-              Please sign in to continue to your account
-            </p>
+          {/* Required Action Buttons (Using ShadCN Button & next/link) */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="rounded-xl border-[#DFBFB9] hover:bg-[#FDF4F1] hover:border-[#C4757C] text-xs sm:text-sm font-semibold shadow-xs"
+            >
+              <Link href="/login" data-testid="btn-login">
+                Sign In
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              size="sm"
+              className="rounded-xl text-xs sm:text-sm font-semibold shadow-md shadow-[#BE6B72]/20"
+            >
+              <Link href="/register" data-testid="btn-register">
+                Register
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* ── Main Content Area ── */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-12">
+        {/* ── Sleek Compact Hero Section with Luxury Silk Background ── */}
+        <section className="relative overflow-hidden rounded-3xl border border-[#ECD7D1] p-6 sm:p-8 lg:p-9 mb-7 shadow-[0_12px_40px_rgba(183,122,125,0.08)] bg-[#FDF6F3]">
+          {/* Background Silk Image */}
+          <div className="pointer-events-none absolute inset-0 z-0">
+            <img
+              src="/hero-banner.jpg"
+              alt="Luxury Silk Banner Background"
+              className="w-full h-full object-cover object-right opacity-90"
+            />
+            {/* Soft gradient mask on left to ensure high readability of text */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FAF2EE] via-[#FAF2EE]/90 sm:via-[#FAF2EE]/85 to-transparent sm:w-3/5" />
           </div>
 
-          {/* Submission Feedback Banner (UI Only) */}
-          {submitted && (
-            <div
-              role="alert"
-              className="mb-5 rounded-xl border border-[#DCAFA9] bg-gradient-to-r from-[#FBECE9] to-[#F7E1DC] px-4 py-3 text-xs text-[#6F3A3E] flex items-center gap-2.5 shadow-xs animate-fadeIn"
-            >
-              <svg
-                className="w-4 h-4 text-[#BA6F75] shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <div>
-                <p className="font-semibold">Sign in form submitted</p>
-                <p className="text-[11px] text-[#7A4E4E]/85 mt-0.5">
-                  UI-only demo for Lab 1. No authentication or backend call executed.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 1. Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-xs sm:text-sm font-semibold text-[#4A3030] mb-1.5"
-              >
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#B58688]">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
-                  className="w-full rounded-xl border border-[#DFBFB9] bg-white/95 pl-10 pr-4 py-2.5 sm:py-2.5 text-xs sm:text-sm text-[#3F2A2A] placeholder-[#B59C97] focus:outline-none focus:border-[#C4757C] focus:ring-3 focus:ring-[#C4757C]/20 transition-all duration-200"
-                />
-              </div>
+          <div className="relative z-10 max-w-2xl">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-[#E9D1CB] text-[#80484E] text-[11px] font-semibold uppercase tracking-wider mb-2.5 shadow-xs backdrop-blur-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#BA6770] animate-pulse" />
+              Maison de Couture • Spring / Summer 2026
             </div>
 
-            {/* 2. Username Field (Tách riêng biệt theo yêu cầu) */}
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-xs sm:text-sm font-semibold text-[#4A3030] mb-1.5"
-              >
-                Username
-              </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#B58688]">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  required
-                  autoComplete="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. alex_rose"
-                  className="w-full rounded-xl border border-[#DFBFB9] bg-white/95 pl-10 pr-4 py-2.5 sm:py-2.5 text-xs sm:text-sm text-[#3F2A2A] placeholder-[#B59C97] focus:outline-none focus:border-[#C4757C] focus:ring-3 focus:ring-[#C4757C]/20 transition-all duration-200"
-                />
-              </div>
-            </div>
+            {/* Headline */}
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#3F2A2A] tracking-tight font-serif leading-tight">
+              The Art of Gentle Sophistication
+            </h1>
 
-            {/* 3. Password Field */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label
-                  htmlFor="password"
-                  className="block text-xs sm:text-sm font-semibold text-[#4A3030]"
-                >
-                  Password
-                </label>
-                <a
-                  href="#forgot-password"
-                  className="text-xs text-[#8A4F53] hover:text-[#B75860] hover:underline transition-colors"
-                >
-                  Forgot password?
+            {/* Description */}
+            <p className="mt-2 text-xs sm:text-sm text-[#7A4E4E]/90 leading-relaxed font-normal max-w-xl">
+              Immerse yourself in handpicked mulberry silks, whisper-soft Mongolian
+              cashmere, and artisanal leather accessories in timeless warm pastel harmonies.
+            </p>
+
+            {/* CTAs & Highlights */}
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <Button
+                asChild
+                size="sm"
+                className="rounded-xl shadow-md shadow-[#BE6B72]/20 font-semibold text-xs sm:text-sm h-9 px-4"
+              >
+                <a href="#collection-heading">
+                  Discover Collection
                 </a>
-              </div>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#B58688]">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-[#DFBFB9] bg-white/95 pl-10 pr-11 py-2.5 sm:py-2.5 text-xs sm:text-sm text-[#3F2A2A] placeholder-[#B59C97] focus:outline-none focus:border-[#C4757C] focus:ring-3 focus:ring-[#C4757C]/20 transition-all duration-200"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-[#AA8E89] hover:text-[#7A4E4E] transition-colors focus:outline-none cursor-pointer"
-                >
-                  {showPassword ? (
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="rounded-xl font-semibold text-xs sm:text-sm bg-white/90 hover:bg-white h-9 px-4"
+              >
+                <Link href="/register">
+                  Join Atelier Society
+                </Link>
+              </Button>
+              <span className="text-[11px] text-[#8A5A5D] font-medium hidden sm:inline-block ml-1">
+                • Complimentary Shipping on orders $150+
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Product Grid Section (Prominently visible directly below Hero) ── */}
+        <section id="collection-section" aria-labelledby="collection-heading" className="scroll-mt-24 mb-12">
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5 pb-3 border-b border-[#ECD7D1]/70">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#9E6569] block mb-1">
+                The Capsule Edit
+              </span>
+              <h2
+                id="collection-heading"
+                className="text-2xl sm:text-3xl font-extrabold text-[#3F2A2A] tracking-tight font-serif"
+              >
+                Curated Spring Garments
+              </h2>
+              <p className="text-xs sm:text-sm text-[#7A4E4E]/80 mt-1">
+                Showing all {products.length} handcrafted boutique pieces
+              </p>
             </div>
 
-            {/* Remember Me Checkbox */}
-            <div className="flex items-center pt-0.5">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 rounded border-[#DFBFB9] text-[#C2737A] focus:ring-[#C2737A]/30 accent-[#C2737A] cursor-pointer"
-                />
-                <span className="text-xs sm:text-sm text-[#6C4242]">
-                  Remember me for 30 days
-                </span>
-              </label>
-            </div>
-
-            {/* 4. Login Button (Rich dusty rose gradient) */}
-            <button
-              type="submit"
-              id="login-button"
-              className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-[#CE7D83] via-[#BE6B72] to-[#A3535B] hover:from-[#D8868C] hover:via-[#C8737A] hover:to-[#B05B63] active:scale-[0.99] text-white font-semibold text-xs sm:text-sm shadow-md shadow-[#BE6B72]/30 hover:shadow-lg hover:shadow-[#BE6B72]/40 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-3 focus:ring-[#BE6B72]/40"
-            >
-              Sign In
-            </button>
-          </form>
-
-          {/* 5. Divider with subtle pastel lines */}
-          <div className="relative my-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#E8CECA]" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-[#FFFDFB] px-3 text-[#9A7470] font-medium tracking-wider">
-                or continue with
+            {/* Filter Pills (Visual Boutique Tags) */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#A84A52] text-white shadow-xs">
+                All Pieces ({products.length})
+              </span>
+              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
+                Pure Silks
+              </span>
+              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
+                Knitwear
+              </span>
+              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
+                Outerwear
               </span>
             </div>
           </div>
 
-          {/* 6. Continue with Google Button */}
-          <button
-            type="button"
-            className="w-full py-2.5 px-4 rounded-xl border border-[#DFBFB9] bg-white hover:bg-[#FDF4F1] active:bg-[#F8E7E3] text-[#4A3030] font-medium text-xs sm:text-sm shadow-xs hover:shadow transition-all duration-150 flex items-center justify-center gap-3 cursor-pointer focus:outline-none focus:ring-3 focus:ring-[#DFBFB9]/40"
+          {/* Product Grid: 1 col on mobile (375px), 2 cols on tablet, 3 cols on desktop (1280px+) */}
+          <div
+            data-testid="product-list"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           >
-            {/* Authentic Google 4-Color SVG Icon */}
-            <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="#4285F4"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-              />
-            </svg>
-            <span>Continue with Google</span>
-          </button>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
 
-          {/* 7. Footer: Sign up prompt */}
-          <div className="mt-6 pt-4 border-t border-[#F0DDD9] text-center">
-            <p className="text-xs text-[#7A4E4E]/80">
-              Don&apos;t have an account?{" "}
-              <a
-                href="#signup"
-                className="font-semibold text-[#AA5158] hover:text-[#C4676F] hover:underline transition-colors ml-1"
-              >
-                Sign up
-              </a>
+        {/* ── Values / Highlights Section ── */}
+        <section
+          id="artisanal-values"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16"
+        >
+          <div className="p-5 rounded-2xl bg-[#FFFDFB]/80 border border-[#ECD7D1] shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#F6E6E3] text-[#A84A52] flex items-center justify-center mb-3">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-[#3F2A2A]">Pure Mulberry Silk</h3>
+            <p className="text-xs text-[#7A4E4E]/80 mt-1 leading-relaxed">
+              Ethically spun natural threads crafted for breathtaking fluid drapes.
             </p>
           </div>
+
+          <div className="p-5 rounded-2xl bg-[#FFFDFB]/80 border border-[#ECD7D1] shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#F6E6E3] text-[#A84A52] flex items-center justify-center mb-3">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-[#3F2A2A]">Artisanal Finishing</h3>
+            <p className="text-xs text-[#7A4E4E]/80 mt-1 leading-relaxed">
+              Every seam tailored with meticulous precision by experienced couturiers.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#FFFDFB]/80 border border-[#ECD7D1] shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#F6E6E3] text-[#A84A52] flex items-center justify-center mb-3">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-[#3F2A2A]">Bespoke Packaging</h3>
+            <p className="text-xs text-[#7A4E4E]/80 mt-1 leading-relaxed">
+              Delivered in signature dusty rose embossed gift boxes with keepsake ribbons.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#FFFDFB]/80 border border-[#ECD7D1] shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#F6E6E3] text-[#A84A52] flex items-center justify-center mb-3">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-[#3F2A2A]">Complimentary Returns</h3>
+            <p className="text-xs text-[#7A4E4E]/80 mt-1 leading-relaxed">
+              30 days effortless exchanges with concierge doorstep pickup.
+            </p>
+          </div>
+        </section>
+
+        {/* ── Editorial Quote Callout ── */}
+        <section
+          id="editorial-quote"
+          className="my-16 text-center max-w-3xl mx-auto px-4 py-12 rounded-3xl bg-[#FFFDFB]/75 border border-[#ECD7D1] shadow-xs"
+        >
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F7ECE8] text-[#9E454D] mb-4">
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+          <blockquote className="text-lg sm:text-xl font-serif text-[#3F2A2A] italic leading-relaxed">
+            &ldquo;A masterclass in modern pastel aesthetics — effortlessly romantic,
+            exquisitely tailored for the contemporary wardrobe.&rdquo;
+          </blockquote>
+          <p className="text-xs uppercase tracking-widest text-[#9E6569] font-bold mt-4">
+            — Atelier Lookbook &amp; Vogue Editorial
+          </p>
+        </section>
+
+        {/* ── VIP Newsletter Sign Up Teaser ── */}
+        <section className="rounded-3xl bg-gradient-to-tr from-[#9B4850] via-[#863B42] to-[#713036] text-white p-8 sm:p-12 text-center shadow-lg shadow-[#863B42]/20">
+          <div className="max-w-xl mx-auto">
+            <span className="text-[11px] uppercase tracking-widest font-semibold text-[#F7D4D7] block mb-2">
+              Private Access
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-serif tracking-tight">
+              Join the Atelier Society
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-[#F9ECEE]/90 leading-relaxed">
+              Receive confidential showroom invitations, early capsule previews, and
+              complimentary bespoke styling sessions.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-2.5 justify-center max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                aria-label="Email address for newsletter"
+                className="w-full px-4 py-2.5 rounded-xl bg-white/10 text-white placeholder-white/60 border border-white/20 focus:outline-none focus:border-white/50 text-xs sm:text-sm"
+              />
+              <button
+                type="button"
+                className="px-5 py-2.5 rounded-xl bg-white text-[#713036] font-semibold text-xs sm:text-sm hover:bg-[#FDF4F1] transition-colors shrink-0 shadow-sm cursor-pointer"
+              >
+                Join Society
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* ── Luxury Multi-Column Footer ── */}
+      <footer className="w-full border-t border-[#ECD7D1] bg-[#FFFDFB]/90 backdrop-blur-md mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-[#F0DDD9]">
+            {/* Col 1: Brand Info */}
+            <div className="md:col-span-2">
+              <span className="text-lg font-bold font-serif text-[#3F2A2A] block">
+                ATELIER ROSE
+              </span>
+              <p className="text-xs text-[#7A4E4E]/80 mt-2 max-w-sm leading-relaxed">
+                Dedicated to artisanal craftsmanship and sustainable luxury.
+                Bringing poetic soft silhouettes, natural silks, and delicate rosy
+                palettes to contemporary living.
+              </p>
+              <div className="mt-4 flex items-center gap-3 text-xs text-[#8A5A5D]">
+                <span>Paris</span> • <span>Milan</span> • <span>Tokyo</span>
+              </div>
+            </div>
+
+            {/* Col 2: Navigation Links */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F2A2A] mb-3">
+                Experience
+              </h3>
+              <ul className="space-y-2 text-xs text-[#7A4E4E]/85">
+                <li>
+                  <Link href="/login" className="hover:text-[#A84A52] transition-colors">
+                    Client Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/register" className="hover:text-[#A84A52] transition-colors">
+                    Create Member Account
+                  </Link>
+                </li>
+                <li>
+                  <a href="#collection-heading" className="hover:text-[#A84A52] transition-colors">
+                    Spring 2026 Collection
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Concierge Care */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#3F2A2A] mb-3">
+                Concierge Care
+              </h3>
+              <ul className="space-y-2 text-xs text-[#7A4E4E]/85">
+                <li>
+                  <a href="#shipping" className="hover:text-[#A84A52] transition-colors">
+                    Boutique Delivery
+                  </a>
+                </li>
+                <li>
+                  <a href="#returns" className="hover:text-[#A84A52] transition-colors">
+                    Care Instructions
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" className="hover:text-[#A84A52] transition-colors">
+                    Stylist Support
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Copyright & Legal */}
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#7A4E4E]/75">
+            <p>© 2026 Atelier Rose Haute Couture. All rights reserved. Lab 2 Architecture.</p>
+            <div className="flex items-center gap-5">
+              <a href="#privacy" className="hover:text-[#A84A52] transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#terms" className="hover:text-[#A84A52] transition-colors">
+                Terms of Service
+              </a>
+              <a href="#cookies" className="hover:text-[#A84A52] transition-colors">
+                Cookie Preferences
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </main>
+      </footer>
+    </div>
   );
 }
