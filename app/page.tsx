@@ -2,6 +2,7 @@ import Link from "next/link";
 import { products } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/components/Header";
 
 export default function HomePage() {
   return (
@@ -26,75 +27,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Header ── */}
-      <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#FFFDFB]/85 border-b border-[#ECD7D1]/70 transition-all shadow-[0_4px_20px_rgba(183,122,125,0.04)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
-          {/* Brand Logo & Name */}
-          <Link
-            href="/"
-            className="flex items-center gap-3.5 group focus:outline-none"
-          >
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-[#D4898E] via-[#C97980] to-[#E29A98] text-white flex items-center justify-center shadow-md shadow-[#C97980]/25 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-[#C97980]/35 transition-all">
-              <span className="font-serif font-bold text-lg sm:text-xl tracking-tighter">
-                AR
-              </span>
-            </div>
-            <div>
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#3F2A2A] block leading-none font-serif">
-                ATELIER ROSE
-              </span>
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#8A5A5D] font-medium block mt-1">
-                Haute Couture &amp; Silks
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wider uppercase text-[#6C4246]">
-            <a
-              href="#collection-heading"
-              className="hover:text-[#A84A52] transition-colors"
-            >
-              Collection
-            </a>
-            <a
-              href="#artisanal-values"
-              className="hover:text-[#A84A52] transition-colors"
-            >
-              Artisanal Values
-            </a>
-            <a
-              href="#editorial-quote"
-              className="hover:text-[#A84A52] transition-colors"
-            >
-              Lookbook
-            </a>
-          </nav>
-
-          {/* Required Action Buttons (Using ShadCN Button & next/link) */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="rounded-xl border-[#DFBFB9] hover:bg-[#FDF4F1] hover:border-[#C4757C] text-xs sm:text-sm font-semibold shadow-xs"
-            >
-              <Link href="/login" data-testid="btn-login">
-                Sign In
-              </Link>
-            </Button>
-
-            <Button
-              asChild
-              size="sm"
-              className="rounded-xl text-xs sm:text-sm font-semibold shadow-md shadow-[#BE6B72]/20"
-            >
-              <Link href="/register" data-testid="btn-register">
-                Register
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* ── Main Content Area ── */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-12">
