@@ -2,14 +2,21 @@
 
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { signIn } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const validateEmail = (val: string): string | undefined => {
@@ -51,9 +58,10 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuccess(false);
+    setAuthError(null);
 
     const emailErr = validateEmail(email);
     const passwordErr = validatePassword(password);
@@ -67,7 +75,25 @@ export default function LoginPage() {
     }
 
     setErrors({});
-    setSuccess(true);
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await signIn(email.trim(), password);
+      if (error) {
+        setAuthError(error.message);
+      } else {
+        setSuccess(true);
+        router.push("/");
+      }
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to sign in. Please try again.";
+      setAuthError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -111,6 +137,30 @@ export default function LoginPage() {
             </p>
           </div>
 
+          {/* Auth Error Banner */}
+          {authError && (
+            <div
+              data-testid="error-auth"
+              role="alert"
+              className="mb-5 rounded-2xl border border-red-200 bg-red-50/90 px-4 py-3.5 text-xs sm:text-sm text-red-700 font-medium flex items-center gap-2.5 shadow-xs"
+            >
+              <svg
+                className="w-4 h-4 text-red-600 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{authError}</span>
+            </div>
+          )}
+
           {/* Success Banner */}
           {success && (
             <div
@@ -131,7 +181,7 @@ export default function LoginPage() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Login successful (demo)</span>
+              <span>Login successful! Redirecting to home...</span>
             </div>
           )}
 
@@ -236,10 +286,11 @@ export default function LoginPage() {
             <div className="pt-2">
               <Button
                 type="submit"
+                disabled={isSubmitting}
                 data-testid="login-submit"
-                className="w-full h-11 text-sm font-semibold rounded-xl shadow-md shadow-[#BE6B72]/25 hover:shadow-lg"
+                className="w-full h-11 text-sm font-semibold rounded-xl shadow-md shadow-[#BE6B72]/25 hover:shadow-lg disabled:opacity-60"
               >
-                Sign In
+                {isSubmitting ? "Signing In..." : "Sign In"}
               </Button>
             </div>
           </form>

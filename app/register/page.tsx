@@ -3,10 +3,12 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function RegisterPage() {
+  const { signUp } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +20,8 @@ export default function RegisterPage() {
     password?: string;
     confirmPassword?: string;
   }>({});
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const validateName = (val: string): string | undefined => {
@@ -111,9 +115,10 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuccess(false);
+    setAuthError(null);
 
     const nameErr = validateName(name);
     const emailErr = validateEmail(email);
@@ -131,7 +136,24 @@ export default function RegisterPage() {
     }
 
     setErrors({});
-    setSuccess(true);
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await signUp(email.trim(), password);
+      if (error) {
+        setAuthError(error.message);
+      } else {
+        setSuccess(true);
+      }
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Registration failed. Please try again.";
+      setAuthError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -175,6 +197,30 @@ export default function RegisterPage() {
             </p>
           </div>
 
+          {/* Auth Error Banner */}
+          {authError && (
+            <div
+              data-testid="error-auth"
+              role="alert"
+              className="mb-5 rounded-2xl border border-red-200 bg-red-50/90 px-4 py-3.5 text-xs sm:text-sm text-red-700 font-medium flex items-center gap-2.5 shadow-xs"
+            >
+              <svg
+                className="w-4 h-4 text-red-600 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{authError}</span>
+            </div>
+          )}
+
           {/* Success Banner */}
           {success && (
             <div
@@ -195,7 +241,7 @@ export default function RegisterPage() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Registration successful (demo)</span>
+              <span>Registration successful! You can now sign in.</span>
             </div>
           )}
 
@@ -390,10 +436,11 @@ export default function RegisterPage() {
             <div className="pt-2">
               <Button
                 type="submit"
+                disabled={isSubmitting}
                 data-testid="register-submit"
-                className="w-full h-11 text-sm font-semibold rounded-xl shadow-md shadow-[#BE6B72]/25 hover:shadow-lg"
+                className="w-full h-11 text-sm font-semibold rounded-xl shadow-md shadow-[#BE6B72]/25 hover:shadow-lg disabled:opacity-60"
               >
-                Create Account
+                {isSubmitting ? "Creating Account..." : "Create Account"}
               </Button>
             </div>
           </form>
