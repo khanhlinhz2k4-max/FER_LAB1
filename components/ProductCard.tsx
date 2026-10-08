@@ -8,6 +8,8 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -27,34 +29,20 @@ export function ProductCard({ product }: ProductCardProps) {
         </span>
 
         {/* Wishlist Icon Button */}
-        <button
-          type="button"
-          aria-label="Save to wishlist"
-          className="absolute top-3.5 right-3.5 z-10 w-8 h-8 rounded-full bg-white/90 border border-[#ECD7D1] text-[#9A676B] hover:text-[#C45E67] hover:scale-110 flex items-center justify-center shadow-xs transition-all cursor-pointer"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.8}
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
-        </button>
+        <div className="absolute top-3.5 right-3.5 z-20">
+          <FavoriteButton productId={product.id} />
+        </div>
 
         {/* Product Image */}
-        <img
-          src={product.image}
-          alt={product.name}
-          data-testid="product-image"
-          className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
-          loading="lazy"
-        />
+        <Link href={`/products/${product.id}`} data-testid="link-detail" className="block w-full h-full">
+          <img
+            src={product.image}
+            alt={product.name}
+            data-testid="product-image"
+            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500 ease-out"
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       {/* Header: Name */}
@@ -98,7 +86,7 @@ export function ProductCard({ product }: ProductCardProps) {
             data-testid="product-price"
             className="text-lg sm:text-xl font-bold text-[#9E454D] tracking-tight font-serif"
           >
-            {product.price}
+            ${product.price.toFixed(2)}
           </span>
         </div>
         <div className="flex items-center gap-1.5 bg-[#FAF0EC] px-3 py-1.5 rounded-full border border-[#ECD7D1]/70">

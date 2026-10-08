@@ -4,7 +4,31 @@ import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 
-export default function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const q = (typeof resolvedParams.q === 'string' ? resolvedParams.q : '')?.toLowerCase();
+  const category = (typeof resolvedParams.category === 'string' ? resolvedParams.category : '')?.toLowerCase();
+
+  let filteredProducts = products;
+
+  if (q) {
+    filteredProducts = filteredProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q)
+    );
+  }
+
+  if (category && category !== "all") {
+    filteredProducts = filteredProducts.filter(
+      (p) => p.category.toLowerCase() === category
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#FBF4EE] via-[#F8EDE9] to-[#F1E4DE] text-[#3F2A2A] selection:bg-[#EAA5AB]/30">
       {/* ── Soft Ambient Decorative Background Orbs ── */}
@@ -105,36 +129,58 @@ export default function HomePage() {
                 Curated Spring Garments
               </h2>
               <p className="text-xs sm:text-sm text-[#7A4E4E]/80 mt-1">
-                Showing all {products.length} handcrafted boutique pieces
+                Showing {filteredProducts.length} handcrafted boutique pieces
               </p>
             </div>
 
-            {/* Filter Pills (Visual Boutique Tags) */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#A84A52] text-white shadow-xs">
-                All Pieces ({products.length})
-              </span>
-              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
-                Pure Silks
-              </span>
-              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
-                Knitwear
-              </span>
-              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#FFFDFB] text-[#7A4E4E] border border-[#ECD7D1] hover:border-[#C4757C] transition-colors cursor-pointer">
-                Outerwear
-              </span>
+            {/* Filter Pills (Visual Boutique Tags) and Search Form */}
+            <div className="flex flex-col sm:items-end gap-3">
+              <form method="get" action="/" className="flex flex-wrap items-center gap-2 bg-[#FFFDFB] p-2 rounded-xl border border-[#ECD7D1] shadow-xs">
+                <input 
+                  type="text" 
+                  name="q" 
+                  defaultValue={q} 
+                  placeholder="Search products..." 
+                  data-testid="search-input"
+                  className="px-3 py-1.5 rounded-lg text-sm bg-transparent border-none focus:ring-1 focus:ring-[#C4757C] outline-none text-[#3F2A2A] placeholder:text-[#A98E8E]"
+                />
+                <select 
+                  name="category" 
+                  defaultValue={category || ""} 
+                  data-testid="category-select"
+                  className="px-3 py-1.5 rounded-lg text-sm bg-transparent border-none focus:ring-1 focus:ring-[#C4757C] outline-none text-[#3F2A2A] cursor-pointer"
+                >
+                  <option value="">All</option>
+                  <option value="Clothing">Clothing</option>
+                  <option value="Accessories">Accessories</option>
+                </select>
+                <Button 
+                  type="submit" 
+                  data-testid="btn-search"
+                  size="sm"
+                  className="rounded-lg bg-[#A84A52] hover:bg-[#8F3F45] text-white"
+                >
+                  Search
+                </Button>
+              </form>
             </div>
           </div>
 
           {/* Product Grid: 1 col on mobile (375px), 2 cols on tablet, 3 cols on desktop (1280px+) */}
-          <div
-            data-testid="product-list"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {filteredProducts.length > 0 ? (
+            <div
+              data-testid="product-list"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+            >
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div data-testid="no-results" className="text-center py-12 text-[#7A4E4E]">
+              No products found.
+            </div>
+          )}
         </section>
 
         {/* ── Values / Highlights Section ── */}

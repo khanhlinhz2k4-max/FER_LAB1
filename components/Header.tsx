@@ -3,11 +3,16 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { AuthContext, useAuth } from "@/contexts/AuthContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
   const auth = useContext(AuthContext) || useAuth();
   const { user, loading, signOut } = auth;
+  
+  // We can safely call useFavorites, but it might throw if not wrapped in provider (it is wrapped in layout now)
+  const favoritesContext = useFavorites();
+  const favoritesCount = favoritesContext?.favorites?.length || 0;
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#FFFDFB]/85 border-b border-[#ECD7D1]/70 transition-all shadow-[0_4px_20px_rgba(183,122,125,0.04)]">
@@ -83,6 +88,17 @@ export function Header() {
                 <span className="text-xs font-medium text-[#5C3236] group-hover:text-[#A84A52] truncate tracking-tight transition-colors">
                   {user.email}
                 </span>
+              </Link>
+
+              <Link 
+                href="/favorites" 
+                data-testid="link-favorites"
+                className="flex items-center gap-1.5 px-3 h-8 rounded-full bg-white/80 hover:bg-[#FDF4F1] border border-[#ECD7D1] hover:border-[#D4898E] text-[#9A676B] hover:text-[#C45E67] text-xs font-semibold transition-all shadow-[0_2px_8px_rgba(183,122,125,0.06)]"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <span data-testid="favorites-count">{favoritesCount}</span>
               </Link>
 
               {/* Refined Sign Out Button */}
