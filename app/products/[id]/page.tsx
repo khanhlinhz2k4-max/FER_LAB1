@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { FavoriteButton } from "@/components/FavoriteButton";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return products.map((product) => ({
     id: product.id.toString(),
   }));
 }
+
 
 export async function generateMetadata({
   params,

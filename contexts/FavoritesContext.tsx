@@ -88,7 +88,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     } else {
       const { error } = await supabase
         .from("favorites")
-        .insert([{ product_id: id }]); // user_id is set by default or RLS
+        .insert([{ product_id: id, user_id: user.id }]);
         
       if (error) {
         // Rollback
