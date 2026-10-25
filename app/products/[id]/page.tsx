@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { getReviewsByProductId } from "@/lib/reviews";
+import { ReviewsSection } from "@/components/ReviewsSection";
 
 export const dynamicParams = false;
 
@@ -12,7 +14,6 @@ export async function generateStaticParams() {
     id: product.id.toString(),
   }));
 }
-
 
 export async function generateMetadata({
   params,
@@ -42,6 +43,9 @@ export default async function ProductDetailPage({
   if (!product) {
     notFound();
   }
+
+  // Fetch reviews directly on the server so they are present in the initial HTML
+  const reviewsData = await getReviewsByProductId(product.id);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDF6F3] text-[#3F2A2A]">
@@ -96,7 +100,16 @@ export default async function ProductDetailPage({
             </div>
           </div>
         </div>
+
+        {/* Reviews Section: Server-rendered + Client Interactive via ReviewsContext */}
+        <ReviewsSection
+          productId={product.id}
+          initialReviews={reviewsData.reviews}
+          initialAverage={reviewsData.average}
+          initialCount={reviewsData.count}
+        />
       </main>
     </div>
   );
 }
+
