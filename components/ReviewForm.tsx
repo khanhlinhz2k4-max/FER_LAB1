@@ -30,7 +30,6 @@ export function ReviewForm({ productId }: ReviewFormProps) {
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       product_id: productId,
-      rating: 5,
       comment: "",
     },
   });
@@ -51,6 +50,18 @@ export function ReviewForm({ productId }: ReviewFormProps) {
     );
   }
 
+  // If newly submitted with success message, display success banner
+  if (successMessage) {
+    return (
+      <div
+        data-testid="review-success"
+        className="my-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-sm font-medium text-emerald-800"
+      >
+        {successMessage}
+      </div>
+    );
+  }
+
   // 2. Logged in and already reviewed: hide form (edit/delete are in the review list)
   if (myReview) {
     return null;
@@ -65,7 +76,7 @@ export function ReviewForm({ productId }: ReviewFormProps) {
     try {
       await submitReview(data.rating, data.comment);
       setSuccessMessage("Your review has been published successfully.");
-      reset({ product_id: productId, rating: 5, comment: "" });
+      reset({ product_id: productId, comment: "" });
     } catch (err: unknown) {
       if (err instanceof Error) {
         setServerError(err.message);
@@ -85,15 +96,6 @@ export function ReviewForm({ productId }: ReviewFormProps) {
       <p className="text-xs text-[#7A4E4E]/80 mb-5">
         Share your experience and craftsmanship feedback with other clients.
       </p>
-
-      {successMessage && (
-        <div
-          data-testid="review-success"
-          className="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-medium text-emerald-800"
-        >
-          {successMessage}
-        </div>
-      )}
 
       {serverError && (
         <div
@@ -123,9 +125,11 @@ export function ReviewForm({ productId }: ReviewFormProps) {
           <select
             id="rating-select"
             data-testid="input-rating"
+            defaultValue=""
             {...register("rating", { valueAsNumber: true })}
             className="w-full sm:w-48 px-3 py-2 rounded-xl border border-[#ECD7D1] bg-[#FAF5F2] text-sm font-medium text-[#3F2A2A] focus:outline-none focus:ring-2 focus:ring-[#C4757C]"
           >
+            <option value="">Select rating</option>
             <option value="5">5 - Exceptional</option>
             <option value="4">4 - Very Good</option>
             <option value="3">3 - Average</option>

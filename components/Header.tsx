@@ -1,14 +1,12 @@
 "use client";
 
-import { useContext } from "react";
 import Link from "next/link";
-import { AuthContext, useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
-  const auth = useContext(AuthContext) || useAuth();
-  const { user, loading, signOut } = auth;
+  const { user, loading, signOut } = useAuth();
   
   // We can safely call useFavorites, but it might throw if not wrapped in provider (it is wrapped in layout now)
   const favoritesContext = useFavorites();

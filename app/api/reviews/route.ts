@@ -8,11 +8,16 @@ import { products } from "@/data/products";
 export async function POST(request: Request) {
   // 1. Authentication check
   const authHeader = request.headers.get("Authorization");
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const token = authHeader.substring(7).trim();
+  const match = authHeader.match(/^Bearer\s+(.+)$/i);
+  if (!match) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const token = match[1].trim();
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -74,7 +79,7 @@ export async function POST(request: Request) {
         comment,
       },
     ])
-    .select("id, product_id, rating, comment, author, created_at")
+    .select("id, product_id, rating, comment, author, created_at, user_id")
     .single();
 
   if (insertError) {

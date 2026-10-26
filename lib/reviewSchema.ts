@@ -6,7 +6,9 @@ export const reviewSchema = z.object({
     .int("Product ID must be an integer")
     .positive("Product ID must be a positive integer"),
   rating: z
-    .number()
+    .number({
+      error: "Rating must be between 1 and 5",
+    })
     .int("Rating must be an integer")
     .min(1, "Rating must be between 1 and 5")
     .max(5, "Rating must be between 1 and 5"),
@@ -21,7 +23,7 @@ export type ReviewFormData = z.infer<typeof reviewSchema>;
 
 export interface Review {
   id: number;
-  user_id: string;
+  user_id?: string;
   product_id: number;
   rating: number;
   comment: string;

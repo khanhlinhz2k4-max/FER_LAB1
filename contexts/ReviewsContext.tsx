@@ -39,8 +39,8 @@ interface ReviewsContextType {
   reviews: Review[];
   myReview: Review | null;
   submitReview: (rating: number, comment: string) => Promise<Review>;
-  updateReview: (rating: number, comment: string) => Promise<Review>;
-  deleteReview: () => Promise<void>;
+  updateReview: (rating: number, comment: string, id?: number) => Promise<Review>;
+  deleteReview: (id?: number) => Promise<void>;
 }
 
 const ReviewsContext = createContext<ReviewsContextType | undefined>(undefined);
@@ -112,15 +112,20 @@ export function ReviewsProvider({
     return createdReview;
   };
 
-  const updateReview = async (rating: number, comment: string): Promise<Review> => {
-    if (!myReview) {
+  const updateReview = async (
+    rating: number,
+    comment: string,
+    id?: number
+  ): Promise<Review> => {
+    const reviewId = id ?? myReview?.id;
+    if (!reviewId) {
       throw new Error("No review to update");
     }
 
     const { data, error } = await supabase
       .from("reviews")
       .update({ rating, comment })
-      .eq("id", myReview.id)
+      .eq("id", reviewId)
       .select("id, user_id, product_id, rating, comment, author, created_at")
       .single();
 
@@ -134,12 +139,12 @@ export function ReviewsProvider({
     return updated;
   };
 
-  const deleteReview = async (): Promise<void> => {
-    if (!myReview) {
+  const deleteReview = async (id?: number): Promise<void> => {
+    const reviewId = id ?? myReview?.id;
+    if (!reviewId) {
       return;
     }
 
-    const reviewId = myReview.id;
     const previousReviews = [...reviews];
 
     // Optimistic delete: update UI first

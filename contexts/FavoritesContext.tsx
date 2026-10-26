@@ -45,7 +45,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
           // RLS ensures we only get our own favorites
           
         if (!error && data) {
-          const ids = data.map((row: any) => row.product_id);
+          const ids = (data as { product_id: number }[]).map((row) => row.product_id);
           dispatch({ type: "SET", payload: ids });
         }
       };

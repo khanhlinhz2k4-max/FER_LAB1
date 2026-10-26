@@ -57,16 +57,11 @@ export function ReviewItem({ review }: ReviewItemProps) {
   };
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete your review?")) {
-      return;
-    }
-
     setIsDeleting(true);
     try {
-      await deleteReview();
+      await deleteReview(review.id);
     } catch (err) {
       console.error("Failed to delete review:", err);
-      alert("Failed to delete review. Please try again.");
     } finally {
       setIsDeleting(false);
     }
@@ -91,7 +86,7 @@ export function ReviewItem({ review }: ReviewItemProps) {
             >
               {review.author}
             </span>
-            <span className="text-[11px] text-[#A98E8E]">
+            <span className="text-[11px] text-[#A98E8E]" suppressHydrationWarning>
               {review.created_at
                 ? new Date(review.created_at).toLocaleDateString("en-US", {
                     year: "numeric",

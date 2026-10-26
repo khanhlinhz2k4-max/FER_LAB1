@@ -1,16 +1,15 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { AuthContext, useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 
 export default function AccountPage() {
   const router = useRouter();
-  const auth = useContext(AuthContext) || useAuth();
-  const { user, loading, signOut } = auth;
+  const { user, loading, signOut } = useAuth();
 
   useEffect(() => {
     if (!loading && !user) {
