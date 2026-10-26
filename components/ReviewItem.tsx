@@ -70,22 +70,27 @@ export function ReviewItem({ review }: ReviewItemProps) {
   return (
     <div
       data-testid="review-item"
-      className="p-5 rounded-2xl bg-[#FFFDFB] border border-[#ECD7D1] shadow-xs flex flex-col gap-3 transition-all hover:border-[#D9A2A8]"
+      className="p-6 rounded-3xl bg-[#FFFDFB]/95 border border-[#ECD7D1] shadow-xs flex flex-col gap-3.5 transition-all duration-200 hover:border-[#D4898E] hover:shadow-[0_8px_25px_rgba(183,122,125,0.06)]"
     >
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-3">
-          {/* Avatar icon */}
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#D4898E] to-[#E29A98] text-white flex items-center justify-center font-serif text-xs font-bold shrink-0">
+        <div className="flex items-center gap-3.5">
+          {/* Luxury Monogram Wax-Seal Avatar */}
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#D4898E] via-[#BA6770] to-[#8C3C43] text-white flex items-center justify-center font-serif text-xs font-bold shrink-0 shadow-xs ring-2 ring-[#ECD7D1]/70">
             {review.author ? review.author.charAt(0).toUpperCase() : "A"}
           </div>
 
           <div>
-            <span
-              data-testid="review-author"
-              className="font-bold text-sm text-[#3F2A2A] block"
-            >
-              {review.author}
-            </span>
+            <div className="flex items-center gap-2">
+              <span
+                data-testid="review-author"
+                className="font-bold text-sm text-[#3F2A2A] block font-serif"
+              >
+                {review.author}
+              </span>
+              <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#FAF0EC] text-[#9E6569] font-bold border border-[#ECD7D1]/70">
+                Verified
+              </span>
+            </div>
             <span className="text-[11px] text-[#A98E8E]" suppressHydrationWarning>
               {review.created_at
                 ? new Date(review.created_at).toLocaleDateString("en-US", {
@@ -100,14 +105,14 @@ export function ReviewItem({ review }: ReviewItemProps) {
 
         {/* Rating and Actions */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF0EC] border border-[#ECD7D1]">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF0EC] border border-[#ECD7D1] shadow-2xs">
             <span
               data-testid="review-rating"
-              className="text-xs font-bold text-[#A84A52]"
+              className="text-xs font-bold text-[#9E454D]"
             >
               {review.rating}
             </span>
-            <span className="text-xs text-[#A84A52]">★</span>
+            <span className="text-xs text-[#9E454D]">★</span>
           </div>
 
           {/* Edit / Delete Buttons (only on own review) */}
@@ -118,7 +123,7 @@ export function ReviewItem({ review }: ReviewItemProps) {
                 size="sm"
                 data-testid="btn-edit-review"
                 onClick={() => setIsEditing(true)}
-                className="h-7 px-2.5 text-xs rounded-lg border-[#ECD7D1] text-[#7A4E4E] hover:bg-[#FAF0EC]"
+                className="h-7 px-3 text-xs rounded-full border-[#ECD7D1] text-[#7A4E4E] hover:bg-[#FAF0EC] hover:text-[#9E454D] font-medium"
               >
                 Edit
               </Button>
@@ -128,7 +133,7 @@ export function ReviewItem({ review }: ReviewItemProps) {
                 data-testid="btn-delete-review"
                 disabled={isDeleting}
                 onClick={handleDelete}
-                className="h-7 px-2.5 text-xs rounded-lg border-rose-200 text-rose-700 hover:bg-rose-50"
+                className="h-7 px-3 text-xs rounded-full border-rose-200 text-rose-700 hover:bg-rose-50 font-medium"
               >
                 {isDeleting ? "..." : "Delete"}
               </Button>
